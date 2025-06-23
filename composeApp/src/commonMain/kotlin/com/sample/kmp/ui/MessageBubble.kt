@@ -12,15 +12,42 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.sample.kmp.domain.ErrorMessage
 import com.sample.kmp.domain.Message
+import com.sample.kmp.domain.ModelMessage
+import com.sample.kmp.domain.UserMessage
 
 @Composable
-fun MessageBubble(message: Message) {
-    val bubbleColor = if (message.isFromUser) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.secondaryContainer
-    val textColor = if (message.isFromUser) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSecondaryContainer
-    val alignment = if (message.isFromUser) Alignment.CenterEnd else Alignment.CenterStart
+fun MessageBubble(message: Message) = when (message) {
+    is ModelMessage -> MessageContent(
+        message = message.text,
+        alignment = Alignment.CenterStart,
+        bubbleColor = MaterialTheme.colorScheme.primaryContainer,
+        textColor = MaterialTheme.colorScheme.onPrimaryContainer
+    )
+    is UserMessage -> MessageContent(
+        message = message.text,
+        alignment = Alignment.CenterEnd,
+        bubbleColor = MaterialTheme.colorScheme.secondaryContainer,
+        textColor = MaterialTheme.colorScheme.onSecondaryContainer
+    )
+    is ErrorMessage -> MessageContent(
+        message = message.text,
+        alignment = Alignment.Center,
+        bubbleColor = MaterialTheme.colorScheme.errorContainer,
+        textColor = MaterialTheme.colorScheme.onErrorContainer
+    )
+}
 
+@Composable
+private fun MessageContent(
+    message: String,
+    alignment: Alignment,
+    bubbleColor: Color,
+    textColor: Color
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -33,7 +60,7 @@ fun MessageBubble(message: Message) {
             modifier = Modifier.widthIn(max = 300.dp) // Max width for bubbles
         ) {
             Text(
-                text = message.text,
+                text = message,
                 color = textColor,
                 modifier = Modifier.padding(12.dp)
             )

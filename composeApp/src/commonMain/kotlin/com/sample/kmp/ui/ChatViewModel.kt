@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sample.kmp.domain.Message
 import com.sample.kmp.domain.LLMRepository
+import com.sample.kmp.domain.UserMessage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,14 +21,10 @@ class ChatViewModel(private val llmRepository: LLMRepository) : ViewModel() {
 
     fun sendMessageToModel(userInput: String) {
         if (userInput.isBlank()) return
-        _messages.value += Message.user(text = userInput)
+        _messages.value += UserMessage(text = userInput)
         _isLoading.value = true
         viewModelScope.launch {
-            llmRepository.prompt(messages.value,userInput)
-                // TODO: show a proper feedback to user in case of error
-                .getOrNull()?.let {
-                    _messages.value += it
-                }
+            _messages.value += llmRepository.prompt(messages.value,userInput)
             _isLoading.value = false
             _userInput.value = ""
         }

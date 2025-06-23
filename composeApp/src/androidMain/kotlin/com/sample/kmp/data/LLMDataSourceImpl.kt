@@ -5,6 +5,7 @@ import com.google.firebase.ai.ai
 import com.google.firebase.ai.type.Content
 import com.google.firebase.ai.type.GenerativeBackend
 import com.sample.kmp.domain.Message
+import com.sample.kmp.domain.UserMessage
 
 class LLMDataSourceImpl : LLMDataSource {
     override suspend fun prompt(contentHistory: List<Message>): String? {
@@ -16,7 +17,7 @@ class LLMDataSourceImpl : LLMDataSource {
     }
 }
 
-private fun Message.senderType() = if (this is Message.UserMessage) "user" else "model"
+private fun Message.senderType() = if (this is UserMessage) "user" else "model"
 
 private fun Message.toContent() =
     Content.Builder()
