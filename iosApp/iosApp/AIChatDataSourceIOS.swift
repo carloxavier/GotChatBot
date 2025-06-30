@@ -1,8 +1,8 @@
-import ComposeApp
+import Chatbot
 import FirebaseAI
 import Foundation
 
-class AIChatDataSourceIOS: ComposeApp.LLMDataSource {
+class AIChatDataSourceIOS: LLMDataSource {
     private let firebaseAI = FirebaseAI.firebaseAI()
 
     func prompt(contentHistory: [Message]) async throws -> String? {
