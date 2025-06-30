@@ -1,4 +1,4 @@
-This is a Kotlin Multiplatform library project targeting Android and iOS.
+This is a library for Android and iOS, for building a sample chatbot with Gemini.
 
 * `/chatbot` is for code that will be shared across Android and iOS.
   It contains several subfolders:
