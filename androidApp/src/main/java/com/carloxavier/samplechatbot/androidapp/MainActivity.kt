@@ -4,21 +4,18 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import com.sample.kmp.ui.App
+import com.sample.kmp.ui.Chat
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContent {
-            App()
+            Chat(
+                initialPrompt = "You are a yoga coach, " +
+                        "help me find a routine for yoga that fits me, " +
+                        "start with a brief intro of yourself, max 120 chars, and ask about what I can do for you."
+            )
         }
     }
-}
-
-@Composable
-fun SomeComposable() {
-    Text("hello world")
 }

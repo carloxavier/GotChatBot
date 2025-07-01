@@ -6,8 +6,8 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 @Preview
-fun App() {
+fun Chat(initialPrompt: String? = null) {
     MaterialTheme {
-        ChatScreen()
+        ChatScreen(initialPrompt)
     }
 }

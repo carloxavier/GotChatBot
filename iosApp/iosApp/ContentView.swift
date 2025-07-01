@@ -4,7 +4,11 @@ import Chatbot
 
 struct ComposeView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewController {
-        MainViewControllerKt.MainViewController()
+        MainViewControllerKt.MainViewController(
+            initialPrompt: "You are a yoga coach, " +
+                "help me find a routine for yoga that fits me, " +
+                "start with a brief intro of yourself, max 120 chars, and ask about what I can do for you."
+        )
     }
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
