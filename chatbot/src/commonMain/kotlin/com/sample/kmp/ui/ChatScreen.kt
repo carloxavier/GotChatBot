@@ -20,17 +20,14 @@ fun ChatScreen(
     initialPrompt: String? = null,
     viewModel: ChatViewModel = viewModel { ChatViewModel(DI.provideChatRepository()) }
 ) {
-    val messages by viewModel.messages.collectAsStateWithLifecycle()
-    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
-    val userInput by viewModel.userInput.collectAsStateWithLifecycle()
-
+    val state by viewModel.chatState.collectAsStateWithLifecycle()
     Scaffold(
         bottomBar = {
             MessageInput(
-                value = userInput,
+                value = state.userInput,
                 onValueChange = viewModel::onUserInput,
-                onSendClick = { viewModel.sendMessageToModel(userInput) },
-                enabled = !isLoading
+                onSendClick = { viewModel.sendMessageToModel(state.userInput) },
+                enabled = !state.isLoading
             )
         }
     ) { paddingValues ->
@@ -40,10 +37,10 @@ fun ChatScreen(
                 .padding(paddingValues)
         ) {
             MessageList(
-                messages = messages,
+                messages = state.messages,
                 modifier = Modifier.weight(1f)
             )
-            if (isLoading) {
+            if (state.isLoading) {
                 LinearProgressIndicator(modifier = Modifier.fillMaxWidth().padding(8.dp))
             }
         }
